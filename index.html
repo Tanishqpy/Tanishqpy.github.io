@@ -3,10 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test Page</title>
+    <title>Tanishq's Blog</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        :root {
+            --purple: #9b59b6;
+            --dark: #1a1a1a;
+            --light-dark: #2d2d2d;
+        }
+
+        body {
+            background-color: var(--dark);
+            color: #fff;
+            line-height: 1.6;
+        }
+
+        /* Header Styles */
+        .header {
+            background: linear-gradient(45deg, var(--dark), var(--light-dark));
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--purple) 0%, transparent 70%);
+            opacity: 0.1;
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            color: var(--purple);
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease;
+        }
+
+        /* Navigation */
+        .nav {
+            background-color: rgba(26, 26, 26, 0.9);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: var(--purple);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .blog-post {
+            background: var(--light-dark);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.6s ease, opacity 0.6s ease;
+        }
+
+        .blog-post.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .blog-post h2 {
+            color: var(--purple);
+            margin-bottom: 1rem;
+        }
+
+        .blog-post p {
+            color: #ccc;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--light-dark);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 4rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav ul {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Hello, World!</h1>
-    <p>If you see this, your `index.html` is loading correctly.</p>
+    <header class="header">
+        <h1>Tanishq's Blog</h1>
+        <p>Sharing Thoughts & Experiences</p>
+    </header>
+
+    <nav class="nav">
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Posts</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="container">
+        <article class="blog-post">
+            <h2>First Blog Post</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam voluptatum voluptate...</p>
+        </article>
+
+        <article class="blog-post">
+            <h2>Learning Web Development</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam voluptatum voluptate...</p>
+        </article>
+
+        <article class="blog-post">
+            <h2>Design Principles</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam voluptatum voluptate...</p>
+        </article>
+    </main>
+
+    <footer class="footer">
+        <p>&copy; 2023 Tanishq's Blog. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        document.querySelectorAll('.blog-post').forEach((post) => {
+            observer.observe(post);
+        });
+
+        // Smooth scroll for navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const section = document.querySelector(this.getAttribute('href'));
+                section.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Header animation on load
+        window.addEventListener('load', () => {
+            document.querySelector('header').style.opacity = '1';
+        });
+    </script>
 </body>
 </html>
