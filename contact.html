@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - Tanishq's Blog</title>
+    <style>
+        /* Add these new styles */
+        .theme-toggle {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--purple);
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px var(--purple);
+            transition: transform 0.3s ease;
+            z-index: 1000;
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1) rotate(180deg);
+        }
+
+        .theme-toggle i {
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        /* Modified CSS variables */
+        :root {
+            --purple: #9b59b6;
+            --dark: #1a1a1a;
+            --light-dark: #2d2d2d;
+            --text-color: #ffffff;
+            --nav-bg: rgba(26, 26, 26, 0.9);
+        }
+
+        [data-theme="light"] {
+            --dark: #f8f9fa;
+            --light-dark: #e9ecef;
+            --text-color: #212529;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Update existing styles to use variables */
+        body {
+            background-color: var(--dark);
+            color: var(--text-color);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .nav {
+            background-color: var(--nav-bg);
+            padding: 1rem;
+            position: sticky;
+            top: 0;
+            backdrop-filter: blur(10px);
+            z-index: 100;
+        }
+
+        .nav ul {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .nav a:hover {
+            background: var(--purple);
+            color: white;
+        }
+
+        .content {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: var(--light-dark);
+            border-radius: 10px;
+        }
+
+        .content h1 {
+            color: var(--purple);
+            margin-bottom: 1rem;
+        }
+
+        .content p {
+            color: var(--text-color);
+            opacity: 0.9;
+        }
+
+        .content form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content form input,
+        .content form textarea {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            background: var(--dark);
+            color: var(--text-color);
+        }
+
+        .content form button {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            background: var(--purple);
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .content form button:hover {
+            background: darken(var(--purple), 10%);
+        }
+
+        /* ...existing code... */
+    </style>
+</head>
+<body>
+    <!-- Add theme toggle button -->
+    <button class="theme-toggle" aria-label="Toggle theme">
+        <i class="fas fa-moon"></i>
+    </button>
+    <!-- ...existing code... -->
+    <nav class="nav">
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="posts.html">Posts</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+    <div class="content">
+        <h1>Contact Me</h1>
+        <p>If you have any questions or just want to say hello, feel free to contact me using the form below:</p>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send</button>
+        </form>
+    </div>
+    <script>
+        // Add theme toggle functionality
+        const themeToggle = document.querySelector('.theme-toggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+
+        // Set initial theme
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        updateToggleIcon(currentTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateToggleIcon(newTheme);
+        });
+
+        function updateToggleIcon(theme) {
+            themeToggle.innerHTML = theme === 'dark' 
+                ? '<i class="fas fa-moon"></i>' 
+                : '<i class="fas fa-sun"></i>';
+        }
+
+        // Add Font Awesome for icons (place this in head section)
+        const faLink = document.createElement('link');
+        faLink.rel = 'stylesheet';
+        faLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css';
+        document.head.appendChild(faLink);
+
+        // ...existing code...
+    </script>
+</body>
+</html>
